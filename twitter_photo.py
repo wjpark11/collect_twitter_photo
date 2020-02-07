@@ -1,5 +1,6 @@
 import tweepy
 import json
+import csv
 
 
 with open("twitter_credentials.json", "r") as read_file:
@@ -13,10 +14,21 @@ auth.set_access_token(cred['ACCESS_TOKEN'], cred['ACCESS_SECRET'])
 
 api = tweepy.API(auth)
 
-user = api.get_user(users['user1'])
+csvfile = open("tweet.csv", "w", newline="")
+csvwriter = csv.writer(csvfile)
 
-print(user.screen_name)
-print(user.followers_count)
-for friend in user.friends():
-   print(friend.screen_name)
+for timeline in tweepy.Cursor(api.user_timeline, id=users['user1']).pages():
+    for tweet in timeline:
+        try:           
+            csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])        
+        except (KeyError, AttributeError):
+            pass
 
+
+# for i in range(20):
+#     timeline = api.user_timeline(id=users['user1'], page=i)
+#     for tweet in timeline:
+#             try:                
+#                 csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])
+#             except (KeyError, AttributeError):
+#                 pass
