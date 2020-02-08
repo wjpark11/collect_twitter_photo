@@ -5,14 +5,14 @@ import os
 df = pd.read_csv("tweet.csv", header=None)
 df.columns = ['tweet', 'url']
 
-df['name'] = df['tweet'].str.extract(r'(나나|카밀|디디|세라|사라|타타|제니|Camille|tah|Jenny|DD|D\sD|리나|Nana|새라|안나|Sara|밀러|디오|리사|nana|Dee.*dee|pony|Pony|Dior)')
+df['name'] = df['tweet'].str.extract(r'(나나|카밀|디디|세라|사라|타타|제니|Camille|tah|Jenny|DD|D\sD|리나|Nana|새라|안나|Sara|밀러|디오|리사|nana|Dee.*dee|Dd|pony|Pony|Dior)')
 
 df = df[~df['name'].isnull()]
 
 df['name'].replace(['Camille'], '카밀', inplace=True)
 df['name'].replace(['tah'], '타타', inplace=True)
 df['name'].replace(['Jenny'], '제니', inplace=True)
-df['name'].replace(['DD','D D','Deedee', 'Dee dee'], '디디', inplace=True)
+df['name'].replace(['DD','D D','Dd', 'Deedee', 'Dee dee'], '디디', inplace=True)
 df['name'].replace(['새라','Sara'], '세라', inplace=True)
 df['name'].replace(['Dior'], '디오', inplace=True)
 df['name'].replace(['Nana', 'nana'], '나나', inplace=True)

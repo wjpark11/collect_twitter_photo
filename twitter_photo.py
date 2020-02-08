@@ -17,6 +17,7 @@ api = tweepy.API(auth)
 csvfile = open("tweet.csv", "w", newline="")
 csvwriter = csv.writer(csvfile)
 
+# all page crawl
 for timeline in tweepy.Cursor(api.user_timeline, id=users['user2']).pages():
     for tweet in timeline:
         try:           
@@ -25,10 +26,10 @@ for timeline in tweepy.Cursor(api.user_timeline, id=users['user2']).pages():
             pass
 
 
-# for i in range(20):
-#     timeline = api.user_timeline(id=users['user1'], page=i)
-#     for tweet in timeline:
-#             try:                
-#                 csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])
-#             except (KeyError, AttributeError):
-#                 pass
+# first page crawl
+# timeline = api.user_timeline(id=users['user2'])
+# for tweet in timeline:
+#         try:                
+#             csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])
+#         except (KeyError, AttributeError):
+#             pass
