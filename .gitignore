@@ -4,3 +4,5 @@ __pycache__
 twitter_credentials.json
 users.json
 .DS_Store
+*/
+tweet.csv

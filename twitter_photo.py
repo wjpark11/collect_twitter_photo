@@ -17,7 +17,7 @@ api = tweepy.API(auth)
 csvfile = open("tweet.csv", "w", newline="")
 csvwriter = csv.writer(csvfile)
 
-for timeline in tweepy.Cursor(api.user_timeline, id=users['user1']).pages():
+for timeline in tweepy.Cursor(api.user_timeline, id=users['user2']).pages():
     for tweet in timeline:
         try:           
             csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])        
