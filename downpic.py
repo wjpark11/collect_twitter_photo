@@ -5,7 +5,7 @@ import os
 df = pd.read_csv("tweet.csv", header=None)
 df.columns = ['tweet', 'url']
 
-df['name'] = df['tweet'].str.extract(r'(나나|카밀|디디|세라|사라|타타|제니|Camille|tah|Jenny|DD|D\sD|리나|Nana|새라|안나|Sara|밀러|디오|리사|nana|Dee.*dee|Dd|pony|Pony|Dior)')
+df['name'] = df['tweet'].str.extract(r'(나나|카밀|디디|세라|사라|타타|제니|Camille|tah|Jenny|DD|D\sD|리나|Nana|새라|안나|Sara|밀러|디오|리사|nana|Dee.*dee|Dd|dd|pony|Pony|Dior)')
 
 df = df[~df['name'].isnull()]
 
