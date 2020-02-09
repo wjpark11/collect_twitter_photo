@@ -1,4 +1,6 @@
 import tweepy
+from tweepy import Stream 
+from tweepy.streaming import StreamListener
 import json
 import csv
 
@@ -18,18 +20,29 @@ csvfile = open("tweet.csv", "w", newline="")
 csvwriter = csv.writer(csvfile)
 
 # all page crawl
-for timeline in tweepy.Cursor(api.user_timeline, id=users['user2']).pages():
+for user in users.values():
+    for timeline in tweepy.Cursor(api.user_timeline, id=user).pages():
+        for tweet in timeline:
+            try:           
+                csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])        
+            except (KeyError, AttributeError):
+                pass
+
+
+# first page crawl
+for user in users.values():
+    timeline = api.user_timeline(id=user)
     for tweet in timeline:
-        try:           
-            csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])        
+        try:                
+            csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])
         except (KeyError, AttributeError):
             pass
 
 
-# first page crawl
-# timeline = api.user_timeline(id=users['user2'])
-# for tweet in timeline:
-#         try:                
-#             csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])
+# for my timeline
+# for timeline in tweepy.Cursor(api.home_timeline).pages():
+#     for tweet in timeline:
+#         try:           
+#             csvwriter.writerow([tweet._json['text'], tweet._json['extended_entities']['media'][0]['media_url']])        
 #         except (KeyError, AttributeError):
 #             pass
